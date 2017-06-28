@@ -21,12 +21,14 @@ function Brick(code) {
 		if(this.brickCode == 1) {
 			var temp = abs(this.y - bricks[1].y)
 			/* === Check if the bricks are in Same Lane === */
-			if(this.x == bricks[1].x) {
+			if(this.x == bricks[1].x)
 				this.reset();
-			}
 		}
-		else
+		else {
 			var temp = abs(this.y - bricks[0].y)
+			if(this.x == bricks[0].x)
+				this.reset();
+		}
 		
 		if(temp <= 100) 
 			this.reset();
