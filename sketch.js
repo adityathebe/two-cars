@@ -36,7 +36,7 @@ function setup() {
 	
 	/* ==== Create points and Bricks ==== */
 	for (var i = 0; i < 2; i++) {
-		bricks.push(new Brick());
+		bricks.push(new Brick(i+1));
 		points.push(new Point());
 		// bullets.push(new Bullet(cars[i]));
 	}

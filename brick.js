@@ -1,9 +1,10 @@
-function Brick() {
-	this.diameter = 30;
-	this.velocity = 4;
-	this.y = Math.floor(random(-1000, -300));
-	this.color = "#34495e";
+function Brick(code) {
 	this.x = grid[Math.floor(random(4))];
+	this.y = Math.floor(random(-500, -300));
+	this.velocity = 4;
+	this.diameter = 30;
+	this.color = "#34495e";
+	this.brickCode = code;
 
 	this.move = function() {
 		this.y += this.velocity;
@@ -13,8 +14,17 @@ function Brick() {
 	}
 
 	this.reset = function() {
-		this.y = Math.floor(random(-500, -100));
 		this.x = grid[Math.floor(random(4))];
+		this.y = Math.floor(random(-500, -100));
+
+		/* ===== Check if the bricks are very near ===== */
+		if(this.brickCode == 1)
+			var temp = abs(this.y - bricks[1].y)
+		else
+			var temp = abs(this.y - bricks[0].y)
+		
+		if(temp <= 100) 
+			this.reset();
 	}
 
 	this.show = function() {
