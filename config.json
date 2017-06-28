@@ -1,0 +1,15 @@
+{
+	"life" : 3,
+	"bullet" : 5,
+	"car" : {
+		"diameter" : 40
+	}
+	"point" : {
+		"diameter" : 30,
+		"velocity" : 5
+	},
+	"brick" : {
+		"diameter" : 30,
+		"velocity" : 5
+	}
+}

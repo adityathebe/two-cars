@@ -22,11 +22,12 @@
     <script language="javascript" src="libraries/p5.sound.js"></script>
 
     <!-- My JS File -->
-    <script language="javascript" src="load.js"></script>   
+    <script language="javascript" src="load.js"></script>
     <script language="javascript" src="car.js"></script>   
     <script language="javascript" src="points.js"></script> 
     <script language="javascript" src="brick.js"></script>
     <script language="javascript" src="bullet.js"></script>
+    <script language="javascript" src="armor.js"></script>
     <script language="javascript" src="sketch.js"></script> 
 
     <!-- Firebase -->
@@ -41,7 +42,7 @@
             <div id="canvas" class="col-md-4">                
             </div> 
             <div class="col-md-4">
-                <h3> Shortcut <small>KEYS</small> </h3>
+                <h3> Instructions <small>&amp; Shortcuts</small></h3>
                 <table class="table">
                     <thead>
                         <tr>
@@ -51,11 +52,27 @@
                     </thead>
                     <tbody>
                         <tr>
+                            <td>LEFT ARROW</td>
+                            <td>Move Left Car</td>
+                        </tr>
+                        <tr>
+                            <td>RIGHT ARROW</td>
+                            <td>Move Right Car</td>
+                        </tr>      
+                        <tr>
+                            <td>A</td>
+                            <td>Fire Bullet : Car A</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>Fire Bullet : Car B</td>
+                        </tr>
+                        <tr>
                             <td>UP ARROW</td>
                             <td>Increase Speed</td>
                         </tr>
                         <tr>
-                            <td>UP ARROW</td>
+                            <td>DOWN ARROW</td>
                             <td>Pause</td>
                         </tr>      
                         <tr>
@@ -79,10 +96,7 @@
                     </span>
                 </div><!-- /input-group -->
                 <div id="Player-Name"> </div>
-                <hr>
-                <h4 > Use Left Arrow Key for left car<br>Use Right Arrow Key for Right Car<br>
-                    Avoid blue circles<br>Feed on orange circles
-                </h4>                
+                <hr>            
             </div>            
             <div class="col-md-4">
                 <h3> Top Users</h3>

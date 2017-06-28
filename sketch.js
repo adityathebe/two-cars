@@ -1,7 +1,7 @@
-var cars, points = [], bricks = [], bullets = [];
+var cars, points = [], bricks = [], bullets = [], armor;
 var grid = [];
-var life = 3, userPoint = 0;
-var displayPoint, displayVelocity, displayLife;
+var life = 3, userPoint = 0, bulletCount = 5;
+var displayPoint, displayVelocity, displayLife, displayArmor;
 var sound = true;
 var ending, intervalVar, pause = false, Gameover = false;
 var tempSpeed, pauseText;
@@ -38,13 +38,20 @@ function setup() {
 	for (var i = 0; i < 2; i++) {
 		bricks.push(new Brick(i+1));
 		points.push(new Point());
-		// bullets.push(new Bullet(cars[i]));
+		bullets.push(new Bullet(cars[i]));
 	}
+
+	armor = new Armor();
 
 	/* ==== Display Points ===== */
 	displayPoint = createElement("h2");
 	displayPoint.position( grid[3], 10)
 	displayPoint.style("color", "white");
+
+	/* ==== Display Armor ===== */
+	displayArmor = createElement("h2");
+	displayArmor.position( grid[3], 100)
+	displayArmor.style("color", "white");
 
 	/* ==== Display Health ===== */
 	displayLife = createElement("h3");
@@ -71,9 +78,10 @@ function increaseSpeed() {
 
 function draw() {
 	background(51);
-	displayVelocity = text(points[0].velocity + ' m/s', grid[3], 70)
+	displayVelocity = text(points[0].velocity + ' m/s', grid[3], 60)
 	displayLife.html( "&hearts;"+ " " + life);
 	displayPoint.html(userPoint);
+	displayArmor.html(bulletCount);
 
 	/* ===== Track Lanes ===== */
 	strokeWeight(5);
@@ -83,13 +91,17 @@ function draw() {
 	line(width/4, height, width/4, 0)
 	line(width - width/4, height, width - width/4, 0)
 
+	armor.show();
+
 	/* ===== CARS ===== */
 	noStroke();
 	cars.forEach(function(car) {
 	    car.update();
 	    car.eatPoint(points);
 	    car.eatBrick(bricks);
+	    car.eatArmor(armor);
 	});
+
 
 	/* ===== POINTS ===== */
 	points.forEach((point)=> {
@@ -102,9 +114,10 @@ function draw() {
 	});
 
 	/* ===== Bullets ===== */
-	// bullets.forEach((bullet)=> {
-	// 	bullet.fire();
-	// }); 
+	bullets.forEach((bullet)=> {
+		bullet.fire();
+		bullet.eat(bricks);
+	}); 
 }
 
 function keyPressed() {
@@ -114,11 +127,8 @@ function keyPressed() {
 		cars[1].move();
 	if (keyCode === ENTER)
 		storeUsername();
-	if (keyCode === UP_ARROW) {
+	if (keyCode === UP_ARROW) 
 		increaseSpeed();
-		// bullets[0].command = true;
-		// bullets[1].command = true;
-	}
 	if (keyCode === DOWN_ARROW)
 		Pause();
 }
@@ -128,6 +138,19 @@ function keyTyped() {
 		soundtoggle();
 	if (key === '2')
 		restart();
+	if (key === 'a') {
+		if(bulletCount > 0 && !Gameover) {
+			bullets[0].x = cars[0].x;
+			bullets[0].command = true;
+
+		}
+	}
+	if (key === 'd') {
+		if(bulletCount > 0 && !Gameover) {
+			bullets[1].x = cars[1].x;
+			bullets[1].command = true;
+		}
+	}
 }
 
 function soundtoggle() {
@@ -150,6 +173,7 @@ function soundtoggle() {
 
 var gameover = function(){
 	Gameover = true;
+	armor.visible = false;
 	storeUsername();
 	if(playerName != "") {		
 		var data = {
@@ -173,20 +197,25 @@ var gameover = function(){
 
 function restart() {
 	Gameover = false;
-	clearInterval(intervalVar);
-	intervalVar = setInterval(increaseSpeed, 15*1000);
 	userPoint = 0;
 	life = 3;
+	bulletCount = 5;
+
+	clearInterval(intervalVar);
+	intervalVar = setInterval(increaseSpeed, 15*1000);
+
 	if(ending)
 		ending.html("");
 	for (var i = 0; i < points.length; i++) {
-		points[i].velocity = 4;
+		points[i].velocity = 5;
 		points[i].y = Math.floor(random(-2000, -200));
 		points[i].x = grid[Math.floor(random(4))];
-		bricks[i].velocity = 4;
+		bricks[i].velocity = 5;
 		bricks[i].y = Math.floor(random(-2000, -200));
 		bricks[i].x = grid[Math.floor(random(4))];
+		bullets[i].command = false;
 	}
+
 	if(pause)
 		Pause();
 }
@@ -198,6 +227,7 @@ function Pause() {
 			for (var i = 0; i < points.length; i++) {
 				points[i].velocity = 0;
 				bricks[i].velocity = 0;
+				armor.velocity = 0;
 			}
 			pause = true;
 			clearInterval(intervalVar);
@@ -212,6 +242,7 @@ function Pause() {
 				points[i].velocity = tempSpeed;
 				bricks[i].velocity = tempSpeed;
 			}
+			armor.velocity = 15;
 			pause = false;
 			pauseText.remove();
 			intervalVar = setInterval(increaseSpeed, 15*1000);

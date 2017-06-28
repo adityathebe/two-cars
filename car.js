@@ -1,6 +1,6 @@
 function Car(x, num) {
 	this.x = x;
-	this.y = height - width/8;
+	this.y = (height - width/8);	
 	this.state = true;
 	this.diameter = 0.5 * (width/4);
 	this.color = "#00AAC1";
@@ -40,16 +40,22 @@ function Car(x, num) {
 						no.play();
 					else 
 						fcuk.play();
-					userPoint++;
-					userPoint--;
 					life--;
 					/* ===== Check Game Over ==== */
 					if(life == 0)
 						gameover();
 				}
 			}
-		})
-		
+		})		
+	}
+
+	this.eatArmor = function(armor) {
+		if (this.x == armor.x) {
+			if(Math.abs(this.y-armor.y) <= armor.diameter) {
+				armor.reset();
+				bulletCount++;
+			}
+		}
 	}
 
 	this.move = function() {
