@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Two Cars</title>
+    <meta charset="UTF-8">
+
+    <!-- BootStrap CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/mycss.css" rel="stylesheet">
+    
+    <!-- P5 Libraries -->
+    <script language="javascript" src="libraries/p5.js"></script>
+    <script language="javascript" src="libraries/p5.dom.js"></script>
+    <script language="javascript" src="libraries/p5.sound.js"></script>
+
+    <!-- My JS File -->
+    <script language="javascript" src="load.js"></script>   
+    <script language="javascript" src="car.js"></script>   
+    <script language="javascript" src="points.js"></script> 
+    <script language="javascript" src="brick.js"></script>
+    <script language="javascript" src="bullet.js"></script>
+    <script language="javascript" src="sketch.js"></script> 
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <script language="javascript" src="firebase.js"></script> 
+    
+
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div id="canvas" class="col-md-4">                
+            </div> 
+            <div class="col-md-4">
+                <h3> Shortcut <small>KEYS</small> </h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Key</th>
+                            <th>Function</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>UP ARROW</td>
+                            <td>Increase Speed</td>
+                        </tr>
+                        <tr>
+                            <td>UP ARROW</td>
+                            <td>Pause</td>
+                        </tr>      
+                        <tr>
+                            <td>1</td>
+                            <td>Sound ON/OFF</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Restart</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button id="sound" class="btn btn-success" onclick="soundtoggle()">Sound</button>
+                <button id="sound" onclick="restart()" class="btn btn-success">Restart</button>
+                <button id="sound" onclick="Pause()" class="btn btn-success">Pause</button>
+                <hr>
+                <h4>You Must Enter Your Name to Submit score</h4>
+                <div class="input-group" id="input-group">                    
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" onClick="storeUsername()">Submit</button>
+                    </span>
+                </div><!-- /input-group -->
+                <div id="Player-Name"> </div>
+                <hr>
+                <h4 > Use Left Arrow Key for left car<br>Use Right Arrow Key for Right Car<br>
+                    Avoid blue circles<br>Feed on orange circles
+                </h4>                
+            </div>            
+            <div class="col-md-4">
+                <h3> Top Users</h3>
+                <table class="table table-hover"" >
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Player</th>
+                            <th>Point</th>
+                            <th>Speed</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user_table">
+                        
+                    </tbody>
+                </table>            
+            </div>
+        </div>
+    </div>
+</body>
+</html>

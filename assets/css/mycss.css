@@ -1,0 +1,23 @@
+@font-face {
+    font-family: Raleway;
+    src: url(../fonts/Raleway.ttf);
+}
+
+h1,h2,h3,h4,p,td,th {
+    font-family: 'Raleway', sans-serif;
+    line-height: 30px;
+    text-align: center;
+}
+
+#canvas {
+    margin-top: 15px;
+}
+
+td {
+    font-size: 15px;
+}
+
+th {
+    text-align: center;
+    font-size: 22px;
+}
