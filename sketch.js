@@ -140,15 +140,20 @@ function keyTyped() {
 		restart();
 	if (key === 'a') {
 		if(bulletCount > 0 && !Gameover &&!pause) {
+			gun.play();
 			bullets[0].x = cars[0].x;
 			bullets[0].command = true;
-
+		} else {
+			nobullet.play();
 		}
 	}
 	if (key === 'd') {
 		if(bulletCount > 0 && !Gameover &&!pause) {
+			gun.play();
 			bullets[1].x = cars[1].x;
 			bullets[1].command = true;
+		} else {
+			nobullet.play();
 		}
 	}
 }
@@ -156,15 +161,15 @@ function keyTyped() {
 function soundtoggle() {
 	if (sound) {
 		gameTrack.setVolume(0);
-		yeah.setVolume(0);
-		longyes.setVolume(0);
+		gun.setVolume(0);
+		nobullet.setVolume(0);
 		no.setVolume(0);
 		fcuk.setVolume(0);
 		sound = false;
 	} else {
 		gameTrack.setVolume(1);
-		yeah.setVolume(0.5);
-		longyes.setVolume(0.5);
+		gun.setVolume(0.3);
+		nobullet.setVolume(0.5);
 		no.setVolume(0.5);
 		fcuk.setVolume(0.5);
 		sound = true;

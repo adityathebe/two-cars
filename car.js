@@ -20,10 +20,6 @@ function Car(x, num) {
 				if(Math.abs(this.y-point.y) <= point.diameter) {
 					point.reset();
 					var sound_opt = random(0,10);
-					if( sound_opt <= 5)
-						yeah.play();
-					else
-						longyes.play();
 					userPoint++;
 				}
 			}
