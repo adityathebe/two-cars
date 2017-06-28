@@ -36,7 +36,7 @@ function gotData(data) {
     // Displaying data
     var table = document.getElementById("user_table");
     for (var i = 0; i < keys.length; i++) {
-        if(i == 5)
+        if(i == 7)
             break;
         var row = table.insertRow(i);
         var cell1 = row.insertCell(0);
