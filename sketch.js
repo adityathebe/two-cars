@@ -12,8 +12,8 @@ function setup() {
 	frameRate(60)
 	var canvas = createCanvas(350, 600);
 	canvas.parent("canvas")
-	gameTrack.play();
 	gameTrack.loop();	
+	gameTrack.play();
 	textAlign(CENTER)
 	textSize(22);
 	textFont("Raleway");
@@ -49,8 +49,8 @@ function setup() {
 	displayPoint.style("color", "white");
 
 	/* ==== Display Armor ===== */
-	displayArmor = createElement("h2");
-	displayArmor.position( grid[3], 100)
+	displayArmor = createElement("h3");
+	displayArmor.position( grid[3] - 10, 100)
 	displayArmor.style("color", "white");
 
 	/* ==== Display Health ===== */
@@ -78,10 +78,10 @@ function increaseSpeed() {
 
 function draw() {
 	background(51);
-	displayVelocity = text(points[0].velocity + ' m/s', grid[3], 60)
+	displayVelocity = text(points[0].velocity + ' m/s', grid[3] , 60)
 	displayLife.html( "&hearts;"+ " " + life);
 	displayPoint.html(userPoint);
-	displayArmor.html(bulletCount);
+	displayArmor.html("<span class='glyphicon glyphicon-screenshot'></span> " + bulletCount);
 
 	/* ===== Track Lanes ===== */
 	strokeWeight(5);
@@ -139,14 +139,14 @@ function keyTyped() {
 	if (key === '2')
 		restart();
 	if (key === 'a') {
-		if(bulletCount > 0 && !Gameover) {
+		if(bulletCount > 0 && !Gameover &&!pause) {
 			bullets[0].x = cars[0].x;
 			bullets[0].command = true;
 
 		}
 	}
 	if (key === 'd') {
-		if(bulletCount > 0 && !Gameover) {
+		if(bulletCount > 0 && !Gameover &&!pause) {
 			bullets[1].x = cars[1].x;
 			bullets[1].command = true;
 		}
@@ -183,11 +183,12 @@ var gameover = function(){
 		}
 		ref.push(data);
 	}
+
 	ending = createElement("h1");
-	textAlign(CENTER)
-	ending.position(width/4, height/2)
+	ending.position(grid[1]-17, height/2)
 	ending.style("color","white");
 	ending.html("GAMEOVER");
+
 	for (var i = 0; i < points.length; i++) {
 		points[i].velocity = 0;
 		bricks[i].velocity = 0;

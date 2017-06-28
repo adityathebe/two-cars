@@ -15,6 +15,7 @@
     <!-- BootStrap CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/mycss.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
     
     <!-- P5 Libraries -->
     <script language="javascript" src="libraries/p5.js"></script>
@@ -52,11 +53,11 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>LEFT ARROW</td>
+                            <td><span class="glyphicon glyphicon-chevron-left"></span> LEFT ARROW </td>
                             <td>Move Left Car</td>
                         </tr>
                         <tr>
-                            <td>RIGHT ARROW</td>
+                            <td><span class="glyphicon glyphicon-chevron-right"></span> RIGHT ARROW</td>
                             <td>Move Right Car</td>
                         </tr>      
                         <tr>
@@ -68,11 +69,11 @@
                             <td>Fire Bullet : Car B</td>
                         </tr>
                         <tr>
-                            <td>UP ARROW</td>
+                            <td>UP ARROW <span class="glyphicon glyphicon-chevron-up"></span></td>
                             <td>Increase Speed</td>
                         </tr>
                         <tr>
-                            <td>DOWN ARROW</td>
+                            <td>DOWN ARROW <span class="glyphicon glyphicon-chevron-down"></span></td>
                             <td>Pause</td>
                         </tr>      
                         <tr>
@@ -85,9 +86,6 @@
                         </tr>
                     </tbody>
                 </table>
-                <button id="sound" class="btn btn-success" onclick="soundtoggle()">Sound</button>
-                <button id="sound" onclick="restart()" class="btn btn-success">Restart</button>
-                <button id="sound" onclick="Pause()" class="btn btn-success">Pause</button>
                 <hr>
                 <h4>You Must Enter Your Name to Submit score</h4>
                 <div class="input-group" id="input-group">                    
@@ -95,12 +93,11 @@
                         <button class="btn btn-default" type="button" onClick="storeUsername()">Submit</button>
                     </span>
                 </div><!-- /input-group -->
-                <div id="Player-Name"> </div>
-                <hr>            
+                <div id="Player-Name"> </div>                
             </div>            
             <div class="col-md-4">
                 <h3> Top Users</h3>
-                <table class="table table-hover" >
+                <table class="table table-hover table-bordered" >
                     <thead>
                         <tr>
                             <th>Rank</th>
@@ -112,7 +109,11 @@
                     <tbody id="user_table">
                         
                     </tbody>
-                </table>            
+                </table>      
+                <hr>
+                <button id="sound" class="btn btn-success" onclick="soundtoggle()">Sound <span class="glyphicon glyphicon-volume-up"></span></button>
+                <button id="sound" onclick="restart()" class="btn btn-success">Restart</button>
+                <button id="sound" onclick="Pause()" class="btn btn-success">Pause</button>
             </div>
         </div>
     </div>

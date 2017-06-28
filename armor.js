@@ -2,7 +2,7 @@ function Armor() {
 	this.x = grid[Math.floor(random(4))];
 	this.y = Math.floor(random(-1000, -100));
 	this.diameter = 10;
-	this.velocity = 10	;
+	this.velocity = bricks[0].velocity + 5;
 	this.color = '#ebebeb'
 	this.visible = false;
 
@@ -31,6 +31,8 @@ function Armor() {
 	}
 
 	this.show = function() {
+		if(!pause)
+			this.velocity = bricks[0].velocity + 5;
 		if(this.visible) {
 			this.move();
 		} else {
