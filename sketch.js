@@ -1,6 +1,6 @@
 var cars, points = [], bricks = [], bullets = [], armor;
 var grid = [];
-var life = 3, userPoint = 0, bulletCount = 5;
+var life, userPoint = 0, bulletCount;
 var displayPoint, displayVelocity, displayLife, displayArmor;
 var sound = true;
 var ending, intervalVar, pause = false, Gameover = false;
@@ -9,6 +9,11 @@ var firebase, ref;
 var userNameField, playerName = "", showName;
 
 function setup() {
+	/* === Cnfiguration === */
+	life = config.life;
+	bulletCount = config.bullet
+
+	/* === SETUP === */
 	frameRate(60)
 	var canvas = createCanvas(350, 600);
 	canvas.parent("canvas")

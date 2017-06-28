@@ -1,5 +1,9 @@
 var gameTrack, no, fcuk, carImg, gun, nobullet;
+var config;
 function preload() {
+	/* === CONFIG FILE === */
+	config = loadJSON('config.json');
+
 	/* === Sounds === */
 	gameTrack = loadSound("assets/sound/maintrack.mp3");
 	no = loadSound("assets/sound/no.mp3");

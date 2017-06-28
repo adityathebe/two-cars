@@ -1,6 +1,6 @@
 function Point() {
-	this.diameter = 30;
-	this.velocity = 5;
+	this.diameter = config.point.diameter;
+	this.velocity = config.point.velocity;
 	this.y = Math.floor(random(-2000, -200));
 	this.x = grid[Math.floor(random(4))];
 

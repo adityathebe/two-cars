@@ -1,8 +1,8 @@
 function Brick(code) {
 	this.x = grid[Math.floor(random(4))];
 	this.y = Math.floor(random(-500, -300));
-	this.velocity = 5;
-	this.diameter = 30;
+	this.diameter = config.brick.diameter;
+	this.velocity = config.brick.velocity;
 	this.color = "#34495e";
 	this.brickCode = code;
 
