@@ -192,28 +192,30 @@ function restart() {
 }
 
 function Pause() {
-	if(!pause) {
-		tempSpeed = points[0].velocity;
-		for (var i = 0; i < points.length; i++) {
-			points[i].velocity = 0;
-			bricks[i].velocity = 0;
+	if(!Gameover) {
+		if(!pause) {
+			tempSpeed = points[0].velocity;
+			for (var i = 0; i < points.length; i++) {
+				points[i].velocity = 0;
+				bricks[i].velocity = 0;
+			}
+			pause = true;
+			clearInterval(intervalVar);
+	
+			/* ==== Display Pause ===== */
+			pauseText = createElement("h1");
+			pauseText.position(grid[1], height/2);
+			pauseText.html("PAUSED")
+			pauseText.style("color","white");
+		} else {
+			for (var i = 0; i < points.length; i++) {
+				points[i].velocity = tempSpeed;
+				bricks[i].velocity = tempSpeed;
+			}
+			pause = false;
+			pauseText.remove();
+			intervalVar = setInterval(increaseSpeed, 15*1000);
 		}
-		pause = true;
-		clearInterval(intervalVar);
-
-		/* ==== Display Pause ===== */
-		pauseText = createElement("h1");
-		pauseText.position(grid[1], height/2);
-		pauseText.html("PAUSED")
-		pauseText.style("color","white");
-	} else {
-		for (var i = 0; i < points.length; i++) {
-			points[i].velocity = tempSpeed;
-			bricks[i].velocity = tempSpeed;
-		}
-		pause = false;
-		pauseText.remove();
-		intervalVar = setInterval(increaseSpeed, 15*1000);
 	}
 }
 
