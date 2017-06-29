@@ -13,6 +13,10 @@ function Brick(code) {
 		}
 	}
 
+	/* Resets 
+		- X coordinate to one of the four grids
+		- Y coordinate in the range (-1000, -100)
+	*/
 	this.reset = function() {
 		this.x = grid[Math.floor(random(4))];
 		this.y = Math.floor(random(-500, -100));
@@ -32,7 +36,6 @@ function Brick(code) {
 		
 		if(temp <= 100) 
 			this.reset();
-
 	}
 
 	this.show = function() {

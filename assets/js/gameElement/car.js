@@ -1,10 +1,10 @@
 function Car(x, num) {
 	this.x = x;
 	this.y = (height - width/8);	
-	this.state = true;
+	this.state = true;		/* True : Move Left, False : Move Right */
 	this.diameter = 0.5 * (width/4);
 	this.color = "#00AAC1";
-	this.carNum = num;
+	this.carNum = num;	/* To Keep track of car */
 
 	this.update = function(){
 		fill(this.color);
@@ -21,6 +21,8 @@ function Car(x, num) {
 					point.reset();
 					var sound_opt = random(0,10);
 					userPoint++;
+					if(userPoint % 15 ==0)
+						increaseSpeed();
 				}
 			}
 		});		

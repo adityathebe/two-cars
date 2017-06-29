@@ -1,15 +1,17 @@
-var cars, points = [], bricks = [], bullets = [], armor;
-var grid = [];
-var life, userPoint = 0, bulletCount;
-var displayPoint, displayVelocity, displayLife, displayArmor;
-var sound = true;
-var ending, intervalVar, pause = false, Gameover = false;
-var tempSpeed, pauseText;
-var firebase, ref;
-var userNameField, playerName = "", showName;
+/* 
+* TWO CARS
+*
+* Recreation of "Two Cars" - Mobile Game
+*
+* @Author : Aditya Thebe
+* @Created ON : 27th June, 2017
+* @Link : www.adityathebe.com
+* @copyright : OpenSource
+*
+*/
 
 function setup() {
-	/* === Cnfiguration === */
+	/* === Inital Configuration === */
 	life = config.life;
 	bulletCount = config.bullet
 
@@ -17,8 +19,8 @@ function setup() {
 	frameRate(60)
 	var canvas = createCanvas(350, 600);
 	canvas.parent("canvas")
-	gameTrack.loop();	
 	gameTrack.play();
+	gameTrack.loop();
 	textAlign(CENTER)
 	textSize(22);
 	textFont("Raleway");
@@ -38,6 +40,9 @@ function setup() {
 
 	/* ==== Create Cars ==== */
 	cars = [new Car(grid[0], 1), new Car(grid[2], 2)];
+
+	/* ==== Create Armors ==== */
+	armor = new Armor();
 	
 	/* ==== Create points and Bricks ==== */
 	for (var i = 0; i < 2; i++) {
@@ -45,8 +50,6 @@ function setup() {
 		points.push(new Point());
 		bullets.push(new Bullet(cars[i]));
 	}
-
-	armor = new Armor();
 
 	/* ==== Display Points ===== */
 	displayPoint = createElement("h2");
@@ -62,24 +65,7 @@ function setup() {
 	displayLife = createElement("h3");
 	displayLife.position(grid[3] * 0.95, 70)
 	displayLife.style("color", "white");
-
-	intervalVar = setInterval(increaseSpeed, 15*1000);
 }
-
-function increaseSpeed() {
-	if (Gameover == false && pause == false) {
-		clearInterval(intervalVar);
-		intervalVar = setInterval(increaseSpeed, 15*1000);
-		points.forEach((point)=> {
-			point.velocity++;
-		});
-
-		bricks.forEach((brick)=> {
-			brick.velocity++;	
-		});
-	}
-}
-
 
 function draw() {
 	background(51);
@@ -130,12 +116,12 @@ function keyPressed() {
 		cars[0].move();
 	if (keyCode === RIGHT_ARROW)
 		cars[1].move();
-	if (keyCode === ENTER)
-		storeUsername();
 	if (keyCode === UP_ARROW) 
 		increaseSpeed();
 	if (keyCode === DOWN_ARROW)
 		Pause();
+	if (keyCode === ENTER)
+		storeUsername();
 }
 
 function keyTyped() {
@@ -163,6 +149,18 @@ function keyTyped() {
 	}
 }
 
+function increaseSpeed() {
+	if (Gameover == false && pause == false) {
+		points.forEach((point)=> {
+			point.velocity++;
+		});
+
+		bricks.forEach((brick)=> {
+			brick.velocity++;	
+		});
+	}
+}
+
 function soundtoggle() {
 	if (sound) {
 		gameTrack.setVolume(0);
@@ -185,6 +183,8 @@ var gameover = function(){
 	Gameover = true;
 	armor.visible = false;
 	storeUsername();
+
+	/* === Store Data to Firebase === */
 	if(playerName != "") {		
 		var data = {
 			name : playerName,
@@ -194,29 +194,25 @@ var gameover = function(){
 		ref.push(data);
 	}
 
-	ending = createElement("h1");
-	ending.position(grid[1]-17, height/2)
-	ending.style("color","white");
-	ending.html("GAMEOVER");
+	gameoverText = createElement("h1");
+	gameoverText.position(grid[1]-17, height/2)
+	gameoverText.style("color","white");
+	gameoverText.html("GAMEOVER");
 
 	for (var i = 0; i < points.length; i++) {
 		points[i].velocity = 0;
 		bricks[i].velocity = 0;
 	}
-	clearInterval(intervalVar);
 }
 
 function restart() {
 	Gameover = false;
+	life = config.life;
+	bulletCount = config.bullet
 	userPoint = 0;
-	life = 3;
-	bulletCount = 5;
 
-	clearInterval(intervalVar);
-	intervalVar = setInterval(increaseSpeed, 15*1000);
-
-	if(ending)
-		ending.html("");
+	if(gameoverText)
+		gameoverText.html("");
 	for (var i = 0; i < points.length; i++) {
 		points[i].velocity = 5;
 		points[i].y = Math.floor(random(-2000, -200));
@@ -241,7 +237,6 @@ function Pause() {
 				armor.velocity = 0;
 			}
 			pause = true;
-			clearInterval(intervalVar);
 	
 			/* ==== Display Pause ===== */
 			pauseText = createElement("h1");
@@ -256,7 +251,6 @@ function Pause() {
 			armor.velocity = 15;
 			pause = false;
 			pauseText.remove();
-			intervalVar = setInterval(increaseSpeed, 15*1000);
 		}
 	}
 }

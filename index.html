@@ -3,42 +3,44 @@
 <head>
     <title>Two Cars</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Facebook Meta Tags -->
-    <meta property="og:url"                 content="https://adityathebe.github.io/two-cars/" />
-    <meta property="og:type"                content="website" />
-    <meta property="og:title"               content="Two Cars Game" />
-    <meta property="og:description"         content="A mobile car game on browser" />
-    <meta property="og:image"               content="https://raw.githubusercontent.com/adityathebe/two-cars/master/assets/img/two_cars.png" />
-    <meta property="og:site_name"           content="http://www.adityathebe.com/" />
+    <meta property="og:url"         content="https://adityathebe.github.io/two-cars/" />
+    <meta property="og:type"        content="website" />
+    <meta property="og:title"       content="Two Cars Game" />
+    <meta property="og:description" content="A mobile car game on browser" />
+    <meta property="og:image"       content="https://raw.githubusercontent.com/adityathebe/two-cars/master/assets/img/two_cars.png" />
+    <meta property="og:site_name"   content="http://www.adityathebe.com/" />
 
-    <!-- BootStrap CSS -->
+    <!-- BootStrap & CSS -->
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/mycss.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link href="assets/css/mycss.css" rel="stylesheet">
     
     <!-- P5 Libraries -->
-    <script language="javascript" src="libraries/p5.js"></script>
-    <script language="javascript" src="libraries/p5.dom.js"></script>
-    <script language="javascript" src="libraries/p5.sound.js"></script>
+    <script language="javascript" src="assets/libraries/p5.js"></script>
+    <script language="javascript" src="assets/libraries/p5.dom.js"></script>
+    <script language="javascript" src="assets/libraries/p5.sound.js"></script>
 
     <!-- My JS File -->
     <script language="javascript" src="load.js"></script>
-    <script language="javascript" src="car.js"></script>   
-    <script language="javascript" src="points.js"></script> 
-    <script language="javascript" src="brick.js"></script>
-    <script language="javascript" src="bullet.js"></script>
-    <script language="javascript" src="armor.js"></script>
+    <script language="javascript" src="assets/js/gameElement/car.js"></script>   
+    <script language="javascript" src="assets/js/gameElement/points.js"></script> 
+    <script language="javascript" src="assets/js/gameElement/brick.js"></script>
+    <script language="javascript" src="assets/js/gameElement/bullet.js"></script>
+    <script language="javascript" src="assets/js/gameElement/armor.js"></script>
     <script language="javascript" src="sketch.js"></script> 
 
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
-    <script language="javascript" src="firebase.js"></script>
+    <script language="javascript" src="assets/js/firebase/firebase.js"></script>
 </head>
 <body>
     <div class="container-fluid">
         <div class="row">
-            <div id="canvas" class="col-md-4">                
+            <div id="canvas" class="col-md-4">
+                <!-- Game will be displayed here  -->
             </div> 
             <div class="col-md-4">
                 <h3> Instructions <small>&amp; Shortcuts</small></h3>
@@ -92,7 +94,7 @@
                     </span>
                 </div><!-- /input-group -->
                 <div id="Player-Name"> </div>                
-            </div>            
+            </div>        
             <div class="col-md-4">
                 <h3> Top Users</h3>
                 <table class="table table-hover table-bordered" >
@@ -110,14 +112,14 @@
                 </table>      
                 <hr>
 
-                <button id="sound" class="btn btn-success" onclick="soundtoggle()">Sound <span class="glyphicon glyphicon-volume-up"></span></button>
-                <button id="sound" onclick="restart()" class="btn btn-success">Restart</button>
-                <button id="sound" onclick="Pause()" class="btn btn-success">Pause</button>
+                <button id="sound" class="btn btn-success btn-lg" onclick="soundtoggle()">Sound <span class="glyphicon glyphicon-volume-up"></span></button>
+                <button id="sound" onclick="restart()" class="btn btn-success btn-lg">Restart</button>
+                <button id="sound" onclick="Pause()" class="btn btn-success btn-lg">Pause</button>
                 <hr>
                 
                 <h3><span class="label label-default">Source Code</span> <a href="https://github.com/adityathebe/two-cars" target="_blank"><img src="assets/img/github.png"></a></h3>
-            </div>
-        </div>
-    </div>
+            </div>  <!-- /column 3 -->
+        </div>  <!-- /row  -->
+    </div>  <!-- /container-fluid  -->
 </body>
 </html>
