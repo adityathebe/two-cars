@@ -12,7 +12,8 @@ function Bullet(car) {
 				if(this.y < 0) {
 					this.command = false;
 					this.y = car.y;
-					bulletCount--;
+					if(!GODMODE)
+						bulletCount--;
 				}
 			}
 		}
@@ -23,7 +24,8 @@ function Bullet(car) {
 			foods.forEach((food) => {
 				if(dist(this.x, this.y, food.x, food.y) < food.diameter) {
 					food.reset();
-					bulletCount--;
+					if(!GODMODE)
+						bulletCount--;
 					this.y = car.y;
 					userPoint++;
 					this.command = false;

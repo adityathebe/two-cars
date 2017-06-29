@@ -1,15 +1,19 @@
 {
 	"life" : 3,
 	"bullet" : 5,
+	"minGap" : 120,
 	"point" : {
-		"diameter" : 30,
-		"velocity" : 5
+		"diameter"	: 30,
+		"velocity"	: 6,
+		"amount"	: 2
 	},
 	"brick" : {
-		"diameter" : 30,
-		"velocity" : 5
+		"diameter"	: 30,
+		"velocity"	: 6,
+		"amount"	: 3
 	},
-	"armor" : {
-		"diameter" : 15
+	"ammo" : {
+		"diameter"	: 15,
+		"velocity"	: 10
 	}
 }

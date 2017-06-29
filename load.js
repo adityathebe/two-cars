@@ -38,7 +38,7 @@ var life, userPoint = 0, bulletCount;
 var displayPoint, displayVelocity, displayLife, displayArmor;
 
 // Booleans
-var sound = true, pause = false, Gameover = false;
+var sound = true, pause = false, GameoverStatus = false;
 
 // Display game Status
 var pauseText, gameoverText;
@@ -51,3 +51,6 @@ var userNameField, playerName = "", showName;
 
 // Firebase
 var firebase, ref;
+
+// Godmode : Avoids brick and unlimited ammo
+var GODMODE = false

@@ -47,10 +47,10 @@ function Car(x, num) {
 		})		
 	}
 
-	this.eatArmor = function(armor) {
-		if (this.x == armor.x) {
-			if(Math.abs(this.y-armor.y) <= armor.diameter) {
-				armor.reset();
+	this.eatAmmo = function(ammo) {
+		if (this.x == ammo.x) {
+			if(Math.abs(this.y-ammo.y) <= ammo.diameter) {
+				ammo.reset();
 				bulletCount++;
 			}
 		}

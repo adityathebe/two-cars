@@ -41,14 +41,18 @@ function setup() {
 	/* ==== Create Cars ==== */
 	cars = [new Car(grid[0], 1), new Car(grid[2], 2)];
 
-	/* ==== Create Armors ==== */
-	armor = new Armor();
+	/* ==== Create Ammo  ==== */
+	ammo = new Ammo();
 	
-	/* ==== Create points and Bricks ==== */
-	for (var i = 0; i < 2; i++) {
-		bricks.push(new Brick(i+1));
-		points.push(new Point());
+	/* ==== Create points and Bullet ==== */
+	for (var i = 0; i < config.point.amount; i++) {
+		points.push(new Point(i+1));
 		bullets.push(new Bullet(cars[i]));
+	}
+
+	/* ==== Create points and Bricks ==== */
+	for (var i = 0; i < config.brick.amount; i++) {
+		bricks.push(new Brick(i+1));
 	}
 
 	/* ==== Display Points ===== */
@@ -56,10 +60,10 @@ function setup() {
 	displayPoint.position( grid[3], 10)
 	displayPoint.style("color", "white");
 
-	/* ==== Display Armor ===== */
-	displayArmor = createElement("h3");
-	displayArmor.position( grid[3] - 10, 100)
-	displayArmor.style("color", "white");
+	/* ==== Display Ammu ===== */
+	displayAmmu = createElement("h3");
+	displayAmmu.position( grid[3] - 10, 100)
+	displayAmmu.style("color", "white");
 
 	/* ==== Display Health ===== */
 	displayLife = createElement("h3");
@@ -72,7 +76,7 @@ function draw() {
 	displayVelocity = text(points[0].velocity + ' m/s', grid[3] , 60)
 	displayLife.html( "&hearts;"+ " " + life);
 	displayPoint.html(userPoint);
-	displayArmor.html("<span class='glyphicon glyphicon-screenshot'></span> " + bulletCount);
+	displayAmmu.html("<span class='glyphicon glyphicon-screenshot'></span> " + bulletCount);
 
 	/* ===== Track Lanes ===== */
 	strokeWeight(5);
@@ -81,18 +85,16 @@ function draw() {
 	strokeWeight(1);
 	line(width/4, height, width/4, 0)
 	line(width - width/4, height, width - width/4, 0)
-
-	armor.show();
+	
 
 	/* ===== CARS ===== */
-	noStroke();
 	cars.forEach(function(car) {
 	    car.update();
 	    car.eatPoint(points);
-	    car.eatBrick(bricks);
-	    car.eatArmor(armor);
+	    if(!GODMODE)
+	    	car.eatBrick(bricks);
+	    car.eatAmmo(ammo);
 	});
-
 
 	/* ===== POINTS ===== */
 	points.forEach((point)=> {
@@ -104,6 +106,9 @@ function draw() {
 		brick.show();
 	});
 
+	/* ===== AMMO ===== */
+	ammo.show();
+
 	/* ===== Bullets ===== */
 	bullets.forEach((bullet)=> {
 		bullet.fire();
@@ -112,10 +117,14 @@ function draw() {
 }
 
 function keyPressed() {
-	if (keyCode === LEFT_ARROW)
-		cars[0].move();
-	if (keyCode === RIGHT_ARROW)
-		cars[1].move();
+	if (keyCode === LEFT_ARROW) {
+		if(!GameoverStatus && !pause)
+			cars[0].move();
+	}
+	if (keyCode === RIGHT_ARROW){
+		if(!GameoverStatus && !pause)
+			cars[1].move();
+	}
 	if (keyCode === UP_ARROW) 
 		increaseSpeed();
 	if (keyCode === DOWN_ARROW)
@@ -130,7 +139,7 @@ function keyTyped() {
 	if (key === '2')
 		restart();
 	if (key === 'a') {
-		if(bulletCount > 0 && !Gameover &&!pause) {
+		if(bulletCount > 0 && !GameoverStatus &&!pause) {
 			gun.play();
 			bullets[0].x = cars[0].x;
 			bullets[0].command = true;
@@ -139,7 +148,7 @@ function keyTyped() {
 		}
 	}
 	if (key === 'd') {
-		if(bulletCount > 0 && !Gameover &&!pause) {
+		if(bulletCount > 0 && !GameoverStatus &&!pause) {
 			gun.play();
 			bullets[1].x = cars[1].x;
 			bullets[1].command = true;
@@ -150,7 +159,7 @@ function keyTyped() {
 }
 
 function increaseSpeed() {
-	if (Gameover == false && pause == false) {
+	if (GameoverStatus == false && pause == false) {
 		points.forEach((point)=> {
 			point.velocity++;
 		});
@@ -180,8 +189,8 @@ function soundtoggle() {
 }
 
 var gameover = function(){
-	Gameover = true;
-	armor.visible = false;
+	GameoverStatus = true;
+	ammo.visible = false;
 	storeUsername();
 
 	/* === Store Data to Firebase === */
@@ -199,44 +208,68 @@ var gameover = function(){
 	gameoverText.style("color","white");
 	gameoverText.html("GAMEOVER");
 
-	for (var i = 0; i < points.length; i++) {
-		points[i].velocity = 0;
-		bricks[i].velocity = 0;
-	}
+	/* === Stop Points === */
+	points.forEach((point)=> {
+		point.velocity = 0;
+	})
+
+	/* === Stop Bricks === */
+	bricks.forEach((brick)=> {
+		brick.velocity = 0;
+	})
 }
 
 function restart() {
-	Gameover = false;
+	GameoverStatus = false;
 	life = config.life;
-	bulletCount = config.bullet
+	bulletCount = config.bullet;
 	userPoint = 0;
+
+	/* If paused then turn pause off */
+	if(pause) {
+		Pause();
+	}
 
 	if(gameoverText)
 		gameoverText.html("");
-	for (var i = 0; i < points.length; i++) {
-		points[i].velocity = 5;
-		points[i].y = Math.floor(random(-2000, -200));
-		points[i].x = grid[Math.floor(random(4))];
-		bricks[i].velocity = 5;
-		bricks[i].y = Math.floor(random(-2000, -200));
-		bricks[i].x = grid[Math.floor(random(4))];
-		bullets[i].command = false;
-	}
 
-	if(pause)
-		Pause();
+	/* === Reset Points === */
+	points.forEach((point)=> {
+		point.velocity = config.point.velocity;
+		point.reset();
+	})
+
+	/* === Reset Bricks === */
+	bricks.forEach((brick)=> {
+		brick.velocity = config.brick.velocity;
+		brick.reset();
+	})
+
+	/* === Reset Points === */
+	bullets.forEach((bullet)=> {
+		bullet.command = false;
+	})
 }
 
 function Pause() {
-	if(!Gameover) {
+	if(!GameoverStatus) {
 		if(!pause) {
-			tempSpeed = points[0].velocity;
-			for (var i = 0; i < points.length; i++) {
-				points[i].velocity = 0;
-				bricks[i].velocity = 0;
-				armor.velocity = 0;
-			}
 			pause = true;
+			tempSpeed = points[0].velocity;
+
+			/* === Stop Points === */
+			points.forEach((point)=> {
+				point.velocity = 0;
+			})
+
+			/* === Stop Bricks === */
+			bricks.forEach((brick)=> {
+				brick.velocity = 0;
+			})
+
+			/* === Stop Bricks === */
+			ammo.velocity = 0;
+
 	
 			/* ==== Display Pause ===== */
 			pauseText = createElement("h1");
@@ -244,11 +277,19 @@ function Pause() {
 			pauseText.html("PAUSED")
 			pauseText.style("color","white");
 		} else {
-			for (var i = 0; i < points.length; i++) {
-				points[i].velocity = tempSpeed;
-				bricks[i].velocity = tempSpeed;
-			}
-			armor.velocity = 15;
+			/* === Rest Points === */
+			points.forEach((point)=> {
+				point.velocity = tempSpeed;
+			})
+
+			/* === Rest Bricks === */
+			bricks.forEach((brick)=> {
+				brick.velocity = tempSpeed;
+			})
+
+			/* === Rest Armor === */
+			ammo.velocity = config.ammo.velocity;
+
 			pause = false;
 			pauseText.remove();
 		}
@@ -257,6 +298,10 @@ function Pause() {
 
 function storeUsername() {
 	playerName = userNameField.value()
+	if(playerName == "JESUS")
+		GODMODE = true;
+	else
+		GODMODE = false;
 	if(playerName != "")
 		showName.html("Player : " + playerName);
 }
